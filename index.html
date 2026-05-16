@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shyne & Joshua — December 4, 2026</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Cinzel:wght@300;400;500&family=Jost:wght@200;300;400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Fixed UI Elements -->
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <div class="barong-overlay" aria-hidden="true"></div>
+
+  <!-- Floating petals canvas -->
+  <canvas class="petals-canvas" id="petalsCanvas" aria-hidden="true"></canvas>
+
+  <!-- Music Toggle -->
+  <button class="music-btn" id="musicBtn" aria-label="Toggle music">
+    <span class="music-icon" id="musicIcon">♪</span>
+    <span class="music-label" id="musicLabel">Music</span>
+  </button>
+
+  <!-- Hidden audio — replace src with your chosen song -->
+  <audio id="weddingAudio" loop preload="none">
+    <source src="music.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 1 — HERO                             -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--hero snap-section" id="scene-hero">
+    <div class="hero-bg-anim" aria-hidden="true"></div>
+    <div class="hero-petals" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <p class="hero-pre cinematic-reveal" data-delay="0">You are cordially invited to celebrate</p>
+
+      <div class="hero-crest cinematic-reveal" data-delay="200" aria-hidden="true">
+        <div class="crest-ring"></div>
+        <div class="crest-inner">✦</div>
+      </div>
+
+      <div class="hero-names cinematic-reveal" data-delay="400">
+        <span class="name-bride">Shyne</span>
+        <span class="name-amp">&amp;</span>
+        <span class="name-groom">Joshua</span>
+      </div>
+
+      <div class="hero-divider cinematic-reveal" data-delay="600"></div>
+
+      <p class="hero-date cinematic-reveal" data-delay="700">December 4, 2026</p>
+      <p class="hero-tagline cinematic-reveal" data-delay="850">"Two souls, one forever."</p>
+
+      <div class="scroll-cue cinematic-reveal" data-delay="1100" aria-label="Scroll down">
+        <div class="scroll-line"></div>
+        <span class="scroll-text">Scroll</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 2 — COUNTDOWN                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--countdown snap-section" id="scene-countdown">
+    <div class="scene-inner fade-scene">
+      <p class="scene-pre">The day approaches</p>
+      <h2 class="scene-title">Counting the Moments</h2>
+      <div class="countdown-grid">
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-days">000</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-sep" aria-hidden="true">·</div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-hours">00</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-sep" aria-hidden="true">·</div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-mins">00</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <div class="countdown-sep" aria-hidden="true">·</div>
+        <div class="countdown-unit">
+          <span class="countdown-num" id="cd-secs">00</span>
+          <span class="countdown-label">Seconds</span>
+        </div>
+      </div>
+      <p class="countdown-until">until we say <em>I do</em></p>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 3 — OUR STORY                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--story snap-section" id="scene-story">
+    <div class="scene-inner">
+      <p class="scene-pre fade-scene">Chapter One</p>
+      <h2 class="scene-title fade-scene">Our Story</h2>
+
+      <div class="story-lines">
+        <p class="story-line" data-story="0">It started quietly —</p>
+        <p class="story-line" data-story="1">the way all great loves do.</p>
+        <p class="story-line" data-story="2">Two souls finding each other</p>
+        <p class="story-line" data-story="3">in the most unexpected of moments.</p>
+        <p class="story-line story-line--pause" data-story="4">&nbsp;</p>
+        <p class="story-line" data-story="5">He got down on one knee</p>
+        <p class="story-line" data-story="6">and asked the question</p>
+        <p class="story-line story-line--em" data-story="7">that changed everything.</p>
+        <p class="story-line story-line--pause" data-story="8">&nbsp;</p>
+        <p class="story-line story-line--answer" data-story="9">She said yes.</p>
+      </div>
+
+      <!-- PROPOSAL PHOTO SLIDESHOW -->
+      <div class="slideshow fade-scene">
+        <div class="slide active">
+          <div class="slide-placeholder">
+            <span>✦ Photo 1 ✦</span>
+            <small>Replace with your proposal photos</small>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <span>✦ Photo 2 ✦</span>
+            <small>Add src to &lt;img&gt; tags</small>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <span>✦ Photo 3 ✦</span>
+            <small>Or use CSS backgrounds</small>
+          </div>
+        </div>
+        <div class="slide">
+          <div class="slide-placeholder">
+            <span>✦ Photo 4 ✦</span>
+            <small>Your most beautiful moment</small>
+          </div>
+        </div>
+        <div class="slideshow-dots" role="tablist" aria-label="Slideshow navigation">
+          <button class="dot active" data-slide="0" role="tab" aria-label="Slide 1"></button>
+          <button class="dot" data-slide="1" role="tab" aria-label="Slide 2"></button>
+          <button class="dot" data-slide="2" role="tab" aria-label="Slide 3"></button>
+          <button class="dot" data-slide="3" role="tab" aria-label="Slide 4"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 4 — DETAILS                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--details snap-section" id="scene-details">
+    <div class="scene-inner">
+      <p class="scene-pre fade-scene">Mark your calendar</p>
+      <h2 class="scene-title fade-scene">The Celebration</h2>
+
+      <div class="details-grid fade-scene">
+        <div class="detail-card">
+          <div class="detail-icon" aria-hidden="true">✦</div>
+          <div class="detail-type">Ceremony</div>
+          <div class="detail-time">3:00 <small>PM</small></div>
+          <div class="detail-date">Friday · December 4, 2026</div>
+          <div class="detail-venue">Jesus The True Light Church</div>
+          <div class="detail-loc">Matangtubig, Baliwag, Bulacan</div>
+        </div>
+
+        <div class="detail-divider" aria-hidden="true"></div>
+
+        <div class="detail-card">
+          <div class="detail-icon" aria-hidden="true">✦</div>
+          <div class="detail-type">Reception</div>
+          <div class="detail-time">6:00 <small>PM</small></div>
+          <div class="detail-date">Friday · December 4, 2026</div>
+          <div class="detail-venue">Reception Venue</div>
+          <div class="detail-loc">Location TBA</div>
+        </div>
+      </div>
+
+      <div class="dresscode-block fade-scene">
+        <div class="dresscode-label">Dress Code</div>
+        <div class="dresscode-value">Formal Attire</div>
+        <div class="dresscode-note">
+          Guests are encouraged to dress elegantly for this special occasion.<br>
+          Ladies — long gowns or cocktail dresses are warmly welcomed.
+        </div>
+        <div class="dresscode-palette">Palette: Dusty Rose · Sage · Ivory · Gold</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 5 — MAP                              -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--map snap-section" id="scene-map">
+    <div class="scene-inner fade-scene">
+      <p class="scene-pre">Find your way to us</p>
+      <h2 class="scene-title">The Venue</h2>
+      <div class="map-wrapper">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3852.123456789!2d120.88!3d14.95!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sJesus+The+True+Light+Church!5e0!3m2!1sen!2sph!4v1234567890"
+          allowfullscreen
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Venue location map">
+        </iframe>
+      </div>
+      <a class="map-cta" href="https://maps.google.com/?q=Jesus+The+True+Light+Church+Matangtubig+Baliwag+Bulacan" target="_blank" rel="noopener noreferrer">Open in Google Maps ↗</a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 6 — GUESTBOOK                        -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--guestbook snap-section" id="scene-guestbook">
+    <div class="scene-inner fade-scene">
+      <p class="scene-pre">Leave a word</p>
+      <h2 class="scene-title">Guestbook</h2>
+      <p class="scene-sub">Your message will stay with us forever.</p>
+
+      <div class="guestbook-form" role="form" aria-label="Leave a message">
+        <div class="field-group">
+          <input type="text" id="guestName" placeholder="Your name" maxlength="60" autocomplete="name" />
+        </div>
+        <div class="field-group">
+          <textarea id="guestMessage" placeholder="Write your wishes for the couple…" maxlength="300" rows="4" aria-describedby="charCount"></textarea>
+          <span class="char-count" id="charCount" aria-live="polite">0 / 300</span>
+        </div>
+        <button class="guestbook-submit" id="guestSubmit" type="button">Leave a Message</button>
+        <p class="guestbook-note">Messages are saved on your device and visible only to you.</p>
+      </div>
+
+      <div class="guestbook-entries" id="guestbookEntries" aria-live="polite" aria-label="Guest messages"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 7 — PHOTO SHARING                    -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--photos snap-section" id="scene-photos">
+    <div class="scene-inner fade-scene">
+      <p class="scene-pre">Be part of the story</p>
+      <h2 class="scene-title">Memories</h2>
+      <p class="scene-sub">Every photo is a piece of our love story.<br>Share yours with us.</p>
+
+      <a class="photo-upload-btn"
+         href="https://drive.google.com/drive/folders/1G0uMSNSZAcAB2B0qr2xSTodS85L53CUr"
+         target="_blank"
+         rel="noopener noreferrer"
+         aria-label="Upload your photos to Google Drive">
+        <span>Upload Memories</span>
+        <span class="btn-arrow" aria-hidden="true">↗</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- SCENE 8 — CLOSING                          -->
+  <!-- ═══════════════════════════════════════════ -->
+  <section class="scene scene--closing snap-section" id="scene-closing">
+    <div class="scene-inner fade-scene">
+      <p class="closing-pre">With all our love</p>
+      <h2 class="closing-names">Shyne <span class="closing-amp">&amp;</span> Joshua</h2>
+      <div class="closing-divider" aria-hidden="true"></div>
+      <p class="closing-date">December 4, 2026</p>
+      <p class="closing-thank">Thank you for being part of our forever.</p>
+      <p class="closing-ph"><em>Salamat sa inyong pagmamahal at suporta.</em></p>
+      <div class="closing-footer">
+        <p>Together is a beautiful place to be.</p>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
