@@ -4,6 +4,19 @@
 ═══════════════════════════════════════════════════════ */
 'use strict';
 
+/* Mark JS as active — CSS only hides .reveal-io content when this class
+   is present, so the site is never blank if a script error occurs. */
+document.documentElement.classList.add('js');
+
+/* Safety net: if anything below throws or the observer never fires for
+   a given element, force it visible after a few seconds so nothing is
+   ever permanently stuck invisible. */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('.reveal-io:not(.visible)').forEach(el => el.classList.add('visible'));
+  }, 4000);
+});
+
 /* ── 1. INTRO SCREEN ── */
 (function initIntro(){
   const intro = document.getElementById('intro');
