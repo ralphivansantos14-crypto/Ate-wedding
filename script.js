@@ -358,14 +358,6 @@ function typewriter(el, text, speed, done) {
     }, 800);
   }
 
-  // Split closing names too
-  const closingNames = document.querySelector('.closing-names');
-  if (closingNames) {
-    const amp = closingNames.querySelector('.closing-amp');
-    const text = closingNames.innerHTML;
-    // We'll animate it on scroll instead
-    closingNames.classList.add('split-target');
-  }
 })();
 
 
@@ -373,7 +365,7 @@ function typewriter(el, text, speed, done) {
    6. COUNTDOWN TIMER with glow on tick
 ────────────────────────────────────────── */
 (function initCountdown() {
-  const WEDDING = new Date('2026-12-04T15:00:00+08:00');
+  const WEDDING = new Date('2026-12-04T15:30:00+08:00');
   const cdDays  = document.getElementById('cd-days');
   const cdHours = document.getElementById('cd-hours');
   const cdMins  = document.getElementById('cd-mins');
@@ -500,171 +492,6 @@ function typewriter(el, text, speed, done) {
 
 
 /* ──────────────────────────────────────────
-   10. CLOSING NAMES — letter reveal on scroll
-────────────────────────────────────────── */
-(function initClosingReveal() {
-  const el = document.querySelector('.closing-names');
-  if (!el) return;
-
-  // Grab the amp span before splitting
-  const ampSpan = el.querySelector('.closing-amp');
-  const ampHTML = ampSpan ? ampSpan.outerHTML : '&';
-
-  // Build letter spans preserving the amp, grouped by word so line-wraps
-  // only happen between words, never inside a name.
-  const rawText = el.textContent; // "Joshua & Shyne"
-  el.innerHTML = '';
-  const words = rawText.split(' ');
-  let globalIndex = 0;
-  words.forEach((word, wi) => {
-    const wordWrap = document.createElement('span');
-    wordWrap.className = 'closing-word';
-    [...word].forEach((ch) => {
-      const s = document.createElement('span');
-      if (ch === '&') {
-        s.innerHTML = ampHTML;
-      } else {
-        s.textContent = ch;
-      }
-      s.classList.add('letter');
-      s.style.transitionDelay = `${globalIndex * 60}ms`;
-      wordWrap.appendChild(s);
-      globalIndex++;
-    });
-    el.appendChild(wordWrap);
-    if (wi < words.length - 1) globalIndex++;
-  });
-
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) { el.classList.add('animate'); observer.unobserve(el); }
-    });
-  }, { threshold: 0.4 });
-  observer.observe(el);
-})();
-
-
-/* ──────────────────────────────────────────
-   11. RSVP FORM
-────────────────────────────────────────── */
-(function initRSVP() {
-  const step1       = document.getElementById('rsvpStep1');
-  const confirm     = document.getElementById('rsvpConfirm');
-  const submitBtn   = document.getElementById('rsvpSubmit');
-  const resetBtn    = document.getElementById('rsvpReset');
-  const nameInput   = document.getElementById('rsvpName');
-  const msgInput    = document.getElementById('rsvpMessage');
-  const charCount   = document.getElementById('rsvpCharCount');
-  const guestField  = document.getElementById('guestCountField');
-  const guestMinus  = document.getElementById('guestMinus');
-  const guestPlus   = document.getElementById('guestPlus');
-  const guestVal    = document.getElementById('guestVal');
-  const guestHidden = document.getElementById('rsvpGuests');
-  const attendRadios = document.querySelectorAll('input[name="attendance"]');
-  const confirmTitle = document.getElementById('confirmTitle');
-  const confirmMsg   = document.getElementById('confirmMsg');
-  const confirmName  = document.getElementById('confirmName');
-  const btnText      = document.getElementById('rsvpBtnText');
-  if (!step1 || !submitBtn) return;
-
-  attendRadios.forEach(radio => {
-    radio.addEventListener('change', () => { if (guestField) guestField.hidden = radio.value !== 'yes'; });
-  });
-
-  let guestCount = 1;
-  if (guestMinus && guestPlus) {
-    guestMinus.addEventListener('click', () => {
-      guestCount = Math.max(1, guestCount - 1);
-      guestVal.textContent = guestCount;
-      if (guestHidden) guestHidden.value = guestCount;
-    });
-    guestPlus.addEventListener('click', () => {
-      guestCount = Math.min(10, guestCount + 1);
-      guestVal.textContent = guestCount;
-      if (guestHidden) guestHidden.value = guestCount;
-    });
-  }
-
-  if (msgInput && charCount) {
-    msgInput.addEventListener('input', () => { charCount.textContent = `${msgInput.value.length} / 300`; });
-  }
-
-  function shake(el) {
-    el.style.transition = 'transform 0.06s ease';
-    el.style.borderBottomColor = 'rgba(196,134,122,0.8)';
-    const vals = [6, -6, 4, -4, 2, -2, 0];
-    let i = 0;
-    const iv = setInterval(() => {
-      el.style.transform = `translateX(${vals[i]}px)`;
-      if (++i >= vals.length) {
-        clearInterval(iv);
-        el.style.transform = '';
-        setTimeout(() => { el.style.borderBottomColor = ''; el.style.transition = ''; }, 1200);
-      }
-    }, 55);
-  }
-
-  submitBtn.addEventListener('click', () => {
-    const name = nameInput ? nameInput.value.trim() : '';
-    const attended = document.querySelector('input[name="attendance"]:checked');
-    let valid = true;
-    if (!name) { shake(nameInput); valid = false; }
-    if (!attended) {
-      const opts = document.querySelector('.attend-options');
-      if (opts) { opts.style.outline = '1px solid rgba(196,134,122,0.5)'; setTimeout(() => { opts.style.outline = ''; }, 2000); }
-      valid = false;
-    }
-    if (!valid) return;
-
-    if (btnText) btnText.textContent = 'Sending…';
-    submitBtn.disabled = true;
-
-    const formData = new FormData();
-    formData.append('form-name', 'rsvp');
-    formData.append('name', name);
-    formData.append('attendance', attended.value === 'yes' ? 'Attending' : 'Not Attending');
-    formData.append('guests', guestHidden ? guestHidden.value : '1');
-    formData.append('message', msgInput ? msgInput.value.trim() : '');
-    formData.append('bot-field', '');
-
-    fetch('/', { method: 'POST', body: formData })
-      .then(() => {
-        const isYes = attended.value === 'yes';
-        if (confirmTitle) confirmTitle.textContent = isYes ? 'See you there!' : 'We\'ll miss you!';
-        if (confirmMsg) confirmMsg.textContent = isYes
-          ? 'We\'ve received your RSVP! We can\'t wait to celebrate this special day with you.'
-          : 'Thank you for letting us know. You\'ll be in our hearts as we celebrate.';
-        if (confirmName) confirmName.textContent = name;
-        step1.hidden = true;
-        confirm.hidden = false;
-        submitBtn.disabled = false;
-        if (btnText) btnText.textContent = 'Confirm RSVP';
-      })
-      .catch(() => {
-        if (btnText) btnText.textContent = 'Something went wrong — try again';
-        submitBtn.disabled = false;
-        setTimeout(() => { if (btnText) btnText.textContent = 'Confirm RSVP'; }, 3000);
-      });
-  });
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      step1.hidden = false;
-      confirm.hidden = true;
-      if (nameInput) nameInput.value = '';
-      if (msgInput) msgInput.value = '';
-      if (charCount) charCount.textContent = '0 / 300';
-      attendRadios.forEach(r => r.checked = false);
-      if (guestField) guestField.hidden = true;
-      guestCount = 1;
-      if (guestVal) guestVal.textContent = 1;
-      if (guestHidden) guestHidden.value = 1;
-    });
-  }
-})();
-
-
-/* ──────────────────────────────────────────
    12. FLOATING PETALS CANVAS (main page)
 ────────────────────────────────────────── */
 (function initPetals() {
@@ -723,18 +550,3 @@ function typewriter(el, text, speed, done) {
   });
 })();
 
-
-/* ──────────────────────────────────────────
-   14. ATTENDEES TOGGLE
-────────────────────────────────────────── */
-(function initAttendeesToggle() {
-  const btn  = document.getElementById('attendeesToggle');
-  const wrap = document.getElementById('attendeesList');
-  if (!btn || !wrap) return;
-  btn.addEventListener('click', () => {
-    const isOpen = wrap.classList.toggle('open');
-    btn.classList.toggle('open', isOpen);
-    btn.setAttribute('aria-expanded', isOpen);
-    wrap.setAttribute('aria-hidden', !isOpen);
-  });
-})();
