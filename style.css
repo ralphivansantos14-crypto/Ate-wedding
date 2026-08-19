@@ -800,8 +800,8 @@ body {
   line-height: 1;
   letter-spacing: -0.01em;
   margin-bottom: 24px;
-  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
-  gap: clamp(12px, 2vw, 24px);
+  display: flex; flex-wrap: wrap; flex-direction: column; justify-content: center; align-items: center;
+  gap: clamp(4px, 1vw, 12px);
   text-shadow: 0 1px 3px rgba(38,25,14,0.12);
 }
 .name-bride, .name-groom { display: inline-block; }
@@ -1571,13 +1571,12 @@ body {
   font-family: var(--font-serif);
   font-size: clamp(38px, 10.9vw, 125px);
   font-weight: 300; color: var(--ink);
-  line-height: 1.1; margin-bottom: 32px;
+  line-height: 1.15; margin-bottom: 32px;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  row-gap: 4px;
-  column-gap: 0.3em;
+  gap: 4px;
   text-align: center;
   width: 100%;
 }
