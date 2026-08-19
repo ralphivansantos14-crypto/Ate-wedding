@@ -510,22 +510,31 @@ function typewriter(el, text, speed, done) {
   const ampSpan = el.querySelector('.closing-amp');
   const ampHTML = ampSpan ? ampSpan.outerHTML : '&';
 
-  // Build letter spans preserving the amp
-  const rawText = el.textContent; // "Shyne & Joshua"
+  // Build letter spans preserving the amp, grouped by word so line-wraps
+  // only happen between words, never inside a name.
+  const rawText = el.textContent; // "Joshua & Shyne"
   el.innerHTML = '';
-  [...rawText].forEach((ch, i) => {
-    if (ch === '&') {
+  const words = rawText.split(' ');
+  let globalIndex = 0;
+  words.forEach((word, wi) => {
+    const wordWrap = document.createElement('span');
+    wordWrap.className = 'closing-word';
+    [...word].forEach((ch) => {
       const s = document.createElement('span');
-      s.innerHTML = ampHTML;
+      if (ch === '&') {
+        s.innerHTML = ampHTML;
+      } else {
+        s.textContent = ch;
+      }
       s.classList.add('letter');
-      s.style.transitionDelay = `${i * 60}ms`;
-      el.appendChild(s);
-    } else {
-      const s = document.createElement('span');
-      s.className = 'letter';
-      s.textContent = ch === ' ' ? '\u00A0' : ch;
-      s.style.transitionDelay = `${i * 60}ms`;
-      el.appendChild(s);
+      s.style.transitionDelay = `${globalIndex * 60}ms`;
+      wordWrap.appendChild(s);
+      globalIndex++;
+    });
+    el.appendChild(wordWrap);
+    if (wi < words.length - 1) {
+      el.appendChild(document.createTextNode('\u00A0'));
+      globalIndex++;
     }
   });
 
