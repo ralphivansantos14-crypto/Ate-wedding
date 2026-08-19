@@ -1572,7 +1572,12 @@ body {
   font-size: clamp(38px, 10.9vw, 125px);
   font-weight: 300; color: var(--ink);
   line-height: 1.1; margin-bottom: 32px;
-  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  row-gap: 4px;
+  column-gap: 0.3em;
   text-align: center;
   width: 100%;
 }

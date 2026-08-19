@@ -532,10 +532,7 @@ function typewriter(el, text, speed, done) {
       globalIndex++;
     });
     el.appendChild(wordWrap);
-    if (wi < words.length - 1) {
-      el.appendChild(document.createTextNode('\u00A0'));
-      globalIndex++;
-    }
+    if (wi < words.length - 1) globalIndex++;
   });
 
   const observer = new IntersectionObserver(entries => {
