@@ -81,7 +81,7 @@ body{
 }
 .reveal{
   opacity:0; transform:translateY(14px);
-  animation:revealUp var(--slow) var(--ease) forwards;
+  animation:revealUp var(--slow) forwards;
   animation-delay:calc(var(--d) * 0.16s + 0.15s);
 }
 @keyframes revealUp{ to{ opacity:1; transform:translateY(0); } }
