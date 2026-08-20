@@ -82,7 +82,7 @@
        SECTION 1 — HERO
   ═══════════════════════════════════════════ -->
   <section class="section section--hero" id="home">
-    <div class="hero-bg-anim" aria-hidden="true"></div>
+    <div class="hero-bg-anim" data-parallax="0.06" aria-hidden="true"></div>
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="hero-inner">
@@ -125,23 +125,23 @@
     <div class="section-inner">
       <p class="section-eyebrow fade-up">The Day Approaches</p>
       <h2 class="section-title fade-up delay-1">Counting the Moments</h2>
-      <div class="countdown-grid fade-up delay-2">
-        <div class="countdown-unit">
+      <div class="countdown-grid stagger-group">
+        <div class="countdown-unit stagger-item">
           <span class="countdown-num" id="cd-days">000</span>
           <span class="countdown-label">Days</span>
         </div>
         <div class="countdown-sep" aria-hidden="true">·</div>
-        <div class="countdown-unit">
+        <div class="countdown-unit stagger-item">
           <span class="countdown-num" id="cd-hours">00</span>
           <span class="countdown-label">Hours</span>
         </div>
         <div class="countdown-sep" aria-hidden="true">·</div>
-        <div class="countdown-unit">
+        <div class="countdown-unit stagger-item">
           <span class="countdown-num" id="cd-mins">00</span>
           <span class="countdown-label">Minutes</span>
         </div>
         <div class="countdown-sep" aria-hidden="true">·</div>
-        <div class="countdown-unit">
+        <div class="countdown-unit stagger-item">
           <span class="countdown-num" id="cd-secs">00</span>
           <span class="countdown-label">Seconds</span>
         </div>
@@ -397,8 +397,8 @@
         Your presence is the greatest gift of all. But if you wish to celebrate us with something special, here are a few things close to our hearts.
       </p>
 
-      <div class="gifts-grid fade-up delay-2">
-        <div class="gift-card">
+      <div class="gifts-grid stagger-group">
+        <div class="gift-card stagger-item">
           <div class="gift-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
               <path d="M3 9h18v12H3zM12 9V3M8 3s0 3 4 3 4-3 4-3"/>
@@ -408,7 +408,7 @@
           <p class="gift-note">Help us build our new home and start our life together. Every peso goes toward our shared dreams.</p>
         </div>
 
-        <div class="gift-card">
+        <div class="gift-card stagger-item">
           <div class="gift-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
               <path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z"/>
@@ -420,7 +420,7 @@
           <p class="gift-note">Contribute to our dream honeymoon — wherever the adventure takes us next.</p>
         </div>
 
-        <div class="gift-card">
+        <div class="gift-card stagger-item">
           <div class="gift-icon" aria-hidden="true">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">
               <path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/>
@@ -434,23 +434,21 @@
   </section>
 
   <section class="section section--closing" id="closing">
-    <div class="closing-photos" aria-hidden="true">
+    <div class="closing-photos" data-parallax="0.05" aria-hidden="true">
       <div class="closing-photo">
         <img src="1000017093.jpg" alt="" />
       </div>
     </div>
     <div class="closing-overlay" aria-hidden="true"></div>
     <div class="section-inner">
-      <h2 class="closing-names closing-badge fade-up delay-1">
+      <div class="closing-crest fade-up" aria-hidden="true">
+        <img src="monogram.png" alt="" />
+      </div>
+      <h2 class="closing-names closing-badge fade-up delay-2">
         <span class="badge-the">The</span>
         <span class="badge-names">Maniquis <span class="badge-dash">&amp;</span> Santos</span>
         <span class="badge-wedding">Wedding</span>
       </h2>
-      <div class="closing-rule fade-up delay-2" aria-hidden="true">
-        <div class="rule-line"></div>
-        <div class="rule-diamond">◆</div>
-        <div class="rule-line"></div>
-      </div>
       <p class="closing-thank fade-up delay-3">Thank you for being part of our forever.</p>
       <p class="closing-tagline fade-up delay-4"><em>Salamat sa inyong pagmamahal at suporta.</em></p>
     </div>

@@ -332,6 +332,22 @@ function typewriter(el, text, speed, done) {
     });
   }, { threshold: 0.5 });
   titles.forEach(el => titleObserver.observe(el));
+
+  // Staggered reveals for lists/cards (countdown units, gift cards, etc.)
+  const staggerGroups = document.querySelectorAll('.stagger-group');
+  const staggerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.stagger-item');
+        items.forEach((item, i) => {
+          item.style.transitionDelay = `${i * 110}ms`;
+          item.classList.add('visible');
+        });
+        staggerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  staggerGroups.forEach(g => staggerObserver.observe(g));
 })();
 
 
@@ -548,5 +564,82 @@ function typewriter(el, text, speed, done) {
       window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - NAV_H, behavior: 'smooth' });
     });
   });
+})();
+
+
+/* ──────────────────────────────────────────
+   14. SUBTLE PARALLAX ON BACKGROUND LAYERS
+────────────────────────────────────────── */
+(function initParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const layers = document.querySelectorAll('[data-parallax]');
+  if (!layers.length) return;
+
+  let ticking = false;
+  function update() {
+    const vh = window.innerHeight;
+    layers.forEach(el => {
+      const speed = parseFloat(el.dataset.parallax) || 0.1;
+      const rect = el.getBoundingClientRect();
+      // offset grows as the element's center drifts from viewport center
+      const offset = (rect.top + rect.height / 2 - vh / 2) * speed;
+      el.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0)`;
+    });
+    ticking = false;
+  }
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  window.addEventListener('resize', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+  update();
+})();
+
+
+/* ──────────────────────────────────────────
+   15. EASED SMOOTH SCROLL (desktop / mouse-wheel only)
+   Adds a fluid lerp-based scroll feel on wheel input.
+   Skipped on touch devices (native momentum scroll is
+   already smooth there) and for reduced-motion users.
+────────────────────────────────────────── */
+(function initEasedScroll() {
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+  if (reduceMotion || isTouch) return;
+
+  let current = window.scrollY;
+  let target  = window.scrollY;
+  let raf = null;
+  const EASE = 0.11;
+
+  function maxScroll() {
+    return document.documentElement.scrollHeight - window.innerHeight;
+  }
+  function clamp(v) {
+    return Math.max(0, Math.min(maxScroll(), v));
+  }
+  function render() {
+    current += (target - current) * EASE;
+    if (Math.abs(target - current) < 0.5) {
+      current = target;
+      window.scrollTo(0, current);
+      raf = null;
+      return;
+    }
+    window.scrollTo(0, current);
+    raf = requestAnimationFrame(render);
+  }
+  function onWheel(e) {
+    if (e.ctrlKey) return; // let pinch-zoom / browser zoom gestures through untouched
+    e.preventDefault();
+    target = clamp(target + e.deltaY);
+    if (!raf) raf = requestAnimationFrame(render);
+  }
+  // Keep target/current in sync when the user scrolls via scrollbar, keys, or an anchor jump
+  window.addEventListener('scroll', () => {
+    if (!raf) { current = window.scrollY; target = window.scrollY; }
+  }, { passive: true });
+  window.addEventListener('resize', () => { target = clamp(target); }, { passive: true });
+
+  window.addEventListener('wheel', onWheel, { passive: false });
 })();
 
