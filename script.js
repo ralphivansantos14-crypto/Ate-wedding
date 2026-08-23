@@ -60,8 +60,9 @@ function typewriter(el, text, speed, done) {
 (function initSplash() {
   const splash   = document.getElementById('splashScreen');
   const enterBtn = document.getElementById('splashEnter');
-  const eyebrow  = document.getElementById('splashEyebrow');
+  const weEl     = document.getElementById('splashWe');
   const namesEl  = document.getElementById('splashNames');
+  const inviteEl = document.getElementById('splashInvite');
   const dateEl   = document.getElementById('splashDate');
   const ruleEl   = document.getElementById('splashRule');
   const canvasEl = document.getElementById('splashCanvas');
@@ -133,40 +134,52 @@ function typewriter(el, text, speed, done) {
   // ── Typewriter sequence ──
   function runTypewriterSequence() {
     setTimeout(() => {
-      // eyebrow fades in via CSS, just set text
-      if (eyebrow) eyebrow.textContent = 'You are cordially invited!';
+      // "We," fades in via CSS, just set text
+      if (weEl) weEl.textContent = 'We,';
 
       setTimeout(() => {
         if (!namesEl) return;
-        // Type "Joshua"
-        typewriter(namesEl, 'Joshua', 80, () => {
-          // Add the "&" with a bloom
+        namesEl.textContent = '';
+
+        // Type "Joshua Maniquis" on its own line
+        const groomSpan = document.createElement('span');
+        groomSpan.className = 'splash-name-line splash-groom';
+        namesEl.appendChild(groomSpan);
+
+        typewriter(groomSpan, 'Joshua Maniquis', 55, () => {
+          // Add the "&" on its own line with a bloom
           const amp = document.createElement('span');
           amp.className = 'splash-amp';
-          amp.innerHTML = ' &amp; ';
+          amp.textContent = '&';
           namesEl.appendChild(amp);
           setTimeout(() => amp.classList.add('visible'), 50);
 
-          // Then type "Shyne"
-          const shyneSpan = document.createElement('span');
-          namesEl.appendChild(shyneSpan);
+          // Then type "Shyne Santos" on its own line
+          const brideSpan = document.createElement('span');
+          brideSpan.className = 'splash-name-line splash-bride';
+          namesEl.appendChild(brideSpan);
           setTimeout(() => {
-            typewriter(shyneSpan, 'Shyne', 80, () => {
-              // Date shimmer in
+            typewriter(brideSpan, 'Shyne Santos', 55, () => {
+              // Invitation line fades in
               setTimeout(() => {
-                if (dateEl) {
-                  dateEl.textContent = 'December 4, 2026';
-                  dateEl.classList.add('visible');
-                  setTimeout(() => {
-                    if (ruleEl) ruleEl.classList.add('visible');
+                if (inviteEl) inviteEl.classList.add('visible');
+
+                // Date shimmer in
+                setTimeout(() => {
+                  if (dateEl) {
+                    dateEl.textContent = 'December 4, 2026';
+                    dateEl.classList.add('visible');
                     setTimeout(() => {
-                      if (enterBtn) {
-                        enterBtn.classList.remove('splash-enter--hidden');
-                        enterBtn.classList.add('visible');
-                      }
-                    }, 400);
-                  }, 500);
-                }
+                      if (ruleEl) ruleEl.classList.add('visible');
+                      setTimeout(() => {
+                        if (enterBtn) {
+                          enterBtn.classList.remove('splash-enter--hidden');
+                          enterBtn.classList.add('visible');
+                        }
+                      }, 400);
+                    }, 500);
+                  }
+                }, 500);
               }, 300);
             });
           }, 220);
